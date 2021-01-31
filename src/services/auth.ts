@@ -2,13 +2,22 @@ import { Service, Inject } from 'typedi';
 import jwt from 'jsonwebtoken';
 import config from '../config';
 import { IUser, IUserInputDTO } from '../interfaces/IUser';
-
+import UserModel from '../models/user';
 @Service()
 export default class AuthService {
   constructor(
-    @Inject('userModel') private userModel: Models.UserModel,
+    @Inject('userModel') private userModel: typeof UserModel,
     @Inject('logger') private logger,
   ) {
+  }
+  public async UserInfo(): Promise<{ user: IUser; token: string }> {
+    try {
+      const userRecord = await this.userModel.find({});
+      return userRecord;
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
+    }
   }
 
   public async SignUp(userInputDTO: IUserInputDTO): Promise<{ user: IUser; token: string }> {

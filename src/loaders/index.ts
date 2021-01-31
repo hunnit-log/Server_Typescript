@@ -3,7 +3,6 @@ import dependencyInjectorLoader from './dependencyInjector';
 import mongooseLoader from './mongoose';
 import Logger from './logger';
 // 이벤트가 트리거 될 수 있도록 최소한 모든 이벤트를 한 번 가져와야합니다.
-import './events';
 
 export default async ({ expressApp }) => {
   const mongoConnection = await mongooseLoader();
@@ -23,13 +22,16 @@ export default async ({ expressApp }) => {
     model: require('../models/user').default,
   };
 
+  const sprintModel = {
+    name: 'sprintModel',
+    model: require('../models/sprint').default,
+  };
   // 후속 loaders에서 필요하기 때문에 agenda 인스턴스를 반환합니다.
   const { agenda } = await dependencyInjectorLoader({
     mongoConnection,
     models: [
       userModel,
-      // sprintModel,
-      // whateverModel
+      sprintModel,
     ],
   });
   Logger.info('✌️ Dependency Injector loaded');

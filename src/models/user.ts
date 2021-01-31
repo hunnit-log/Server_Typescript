@@ -8,17 +8,19 @@ const User = new mongoose.Schema(
       required: [true, 'Please enter a full name'],
       index: true,
     },
-
     phone: {
       type: String,
       lowercase: true,
       unique: true,
       index: true,
     },
-
     role: {
       type: String,
       default: 'user',
+    },
+    isNotice: {
+      type: Boolean,
+      default: true,
     },
   },
   { timestamps: true },
