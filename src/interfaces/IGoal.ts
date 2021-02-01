@@ -1,13 +1,10 @@
-import { IScore } from '../interfaces/IScore';
-
 export interface IGoal {
   title: string;
-  percentage: string;
-  scores: IScore[];
+  percentage: number;
+  scores: Map<string, number>;
 }
 
 export interface IGoalInputDTO {
-  title: string;
-  percentage: string;
-  scores: IScore[];
+  title: string[];
+  startTime: string;
 }
