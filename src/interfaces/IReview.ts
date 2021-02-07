@@ -1,13 +1,11 @@
-import { IComment } from "./IComment";
-
 export interface IReview {
   reviewTime: string;
   averageAchievement: number;
-  comments: IComment[];
+  comments: Map<string, string>;
 }
 
 export interface IReviewInputDTO {
-  question: string;
-  answer: string;
-  comments: IComment[];
+  startTime: string;
+  day: number;
+  questions: string[];
 }

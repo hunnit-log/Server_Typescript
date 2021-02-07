@@ -1,4 +1,5 @@
 import { ISprint } from '../interfaces/ISprint';
+
 import mongoose from 'mongoose';
 
 const Sprint = new mongoose.Schema(
@@ -23,13 +24,17 @@ const Sprint = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    isNotice : {
+      type: Boolean,
+      default: true,
+    },
     goal: {
       type: [Object],
     },
     dayOfTheWeek: {
       type: String,
     },
-    review: {
+    reviews: {
       type: [Object],
     },
   },
