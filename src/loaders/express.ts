@@ -18,9 +18,6 @@ export default ({ app }: { app: express.Application }) => {
   // heroku 또는 Cloudwatch 로그에 실제 원본 IP를 표시합니다.
   app.enable('trust proxy');
 
-  // 클라이언트가 지원하지 않는 곳에서 PUT 또는 DELETE와 같은 HTTP 동사를 사용할 수 있습니다.
-  app.use(require('method-override')());
-
   // req.body의 원시 문자열을 json으로 변환하는 미들웨어
   app.use(bodyParser.json());
   // Load API routes
