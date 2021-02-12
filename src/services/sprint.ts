@@ -89,6 +89,7 @@ export default class SprintService {
         throw new Error('Sprint cannot be read');
       }
       const sprint = sprintRecord.toObject();
+      sprint.goal.sort((a, b) => a.percentage < b.percentage ? -1 : a.percentage > b.percentage ? 1 : 0)
       const dDay = this.getdDay(sprint.endTime);
       sprint.dDay = dDay.dDay;
       return { success:true, message:'성공', data:sprint };
