@@ -29,6 +29,14 @@ export default class SprintService {
         goals,
         isNotice,
       } = sprintInputDTO;
+
+      // [0]. 이미 진행중인 스프린트가 있는지 체크
+      const isCheckProgressSprint = await this.sprintModel.findOne({
+        isProgress: true
+      });
+      if(isCheckProgressSprint) {
+        throw new Error('Sprint cannot be created. Already progress Sprint.');
+      }
       // [1]. Goal 생성
       const goalInputDTO : IGoalInputDTO = {
         startTime,
@@ -36,7 +44,7 @@ export default class SprintService {
       };
       const {goal} = await this.goalService.createGoal(goalInputDTO);
       if (!goal) {
-        throw new Error('Goal cannot be created');
+        throw new Error('Sprint cannot be created. Error Goal');
       }
 
       // [2]. Reviews 생성
