@@ -88,7 +88,6 @@ export default class SprintService {
       if (!sprintRecord) {
         throw new Error('Sprint cannot be read');
       }
-      console.log(sprintRecord);
       const sprint = sprintRecord.toObject();
       const dDay = this.getdDay(sprint.endTime);
       sprint.dDay = dDay.dDay;
