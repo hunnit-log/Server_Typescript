@@ -39,4 +39,26 @@ export default (app: Router) => {
       }
     },
   );
+
+  route.get(
+    '/:id',
+    celebrate({
+      params: Joi.object({
+        id: Joi.string().required(),
+      }),
+    }),
+    // middlewares.isAuth, middlewares.attachCurrentUser,
+    async (req: Request, res: Response, next: NextFunction) => {
+      const logger: Logger = Container.get('logger');
+      logger.debug('Calling Get-Sprint endpoint with params: %o', req.params );
+      try {
+        const sprintServiceInstance = Container.get(SprintService);
+        const {success, message, data}  = await sprintServiceInstance.readSprint(req.params.id);
+        return res.status(200).json({ success, message, data });
+      } catch (e) {
+        logger.error('🔥 error: %o', e);
+        return next(e);
+      }
+    },
+  );
 };

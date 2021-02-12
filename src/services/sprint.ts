@@ -6,6 +6,7 @@ import { IReviewInputDTO } from '../interfaces/IReview';
 import SprintModel from '../models/sprint';
 import GoalService from './goal';
 import ReviewService from './review';
+import dayjs from 'dayjs';
 
 @Service()
 export default class SprintService {
@@ -72,6 +73,38 @@ export default class SprintService {
       console.log(sprintRecord);
       const sprint = sprintRecord.toObject();
       return { success:true, message:'성공', data:sprint };
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
+    }
+  }
+
+  public async readSprint(id : string): Promise<{ success: boolean; message: string; data: object;}> {
+    try {
+      const sprintRecord = await this.sprintModel.findOne({
+        _id: id,
+        isProgress: true
+      }).select('-reviews -question -createdAt -updatedAt -isNotice -isProgress');
+      if (!sprintRecord) {
+        throw new Error('Sprint cannot be read');
+      }
+      const sprint = sprintRecord.toObject();
+      sprint.goal.sort((a, b) => a.percentage < b.percentage ? -1 : a.percentage > b.percentage ? 1 : 0)
+      const dDay = this.getdDay(sprint.endTime);
+      sprint.dDay = dDay.dDay;
+      return { success:true, message:'성공', data:sprint };
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
+    }
+  }
+
+  private getdDay(endTime : string): { dDay: number} {
+    try {
+      const endDate = dayjs(endTime);
+      const today = dayjs();
+      const dDay = endDate.diff(today,'days');
+      return { dDay };
     } catch (e) {
       this.logger.error(e);
       throw e;
