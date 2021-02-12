@@ -82,8 +82,9 @@ export default class SprintService {
   public async readSprint(id : string): Promise<{ success: boolean; message: string; data: object;}> {
     try {
       const sprintRecord = await this.sprintModel.findOne({
-        _id: id
-      }).select('-reviews -question');
+        _id: id,
+        isProgress: true
+      }).select('-reviews -question -createdAt -updatedAt -isNotice -isProgress');
       if (!sprintRecord) {
         throw new Error('Sprint cannot be read');
       }
