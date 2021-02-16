@@ -9,16 +9,19 @@ export interface ISprint {
   nextReviewTime: string;
   totalPercentage: number;
   isProgress: boolean;
+  isNotice: boolean;
   goal : IGoal[];
   dayOfTheWeek : string;
   reviews : IReview[];
+  user: string;
 }
 
 export interface ISprintInputDTO {
   startTime: string;
-  question: string[];
+  day: number;
   nextReviewTime: string;
-  goal : IGoal[];
   dayOfTheWeek : string;
-  reviews : IReview[];
+  goals: string[];
+  questions: string[];
+  isNotice: boolean;
 }
