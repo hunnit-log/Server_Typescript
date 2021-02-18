@@ -10,15 +10,6 @@ export default class AuthService {
     @Inject('logger') private logger,
   ) {
   }
-  public async UserInfo(): Promise<{ user: IUser; token: string }> {
-    try {
-      const userRecord = await this.userModel.find({});
-      return userRecord;
-    } catch (e) {
-      this.logger.error(e);
-      throw e;
-    }
-  }
 
   public async SignUp(userInputDTO: IUserInputDTO): Promise<{ user: IUser; token: string }> {
     try {
