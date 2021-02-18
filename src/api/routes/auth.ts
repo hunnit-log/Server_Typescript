@@ -12,23 +12,6 @@ const route = Router();
 export default (app: Router) => {
   app.use('/auth', route);
 
-  route.get(
-    '/userInfo',
-    async (req: Request, res: Response, next: NextFunction) => {
-      const logger: Logger = Container.get('logger');
-      logger.debug('Calling User-Info');
-      try {
-        const authServiceInstance = Container.get(AuthService);
-        const user  = await authServiceInstance.UserInfo();
-        return res.status(200).json({ user});
-      } catch (e) {
-        logger.error('🔥 error: %o', e);
-        return next(e);
-      }
-    },
-  );
-
-
   route.post(
     '/signup',
     celebrate({
