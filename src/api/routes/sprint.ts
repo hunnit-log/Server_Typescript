@@ -31,7 +31,7 @@ export default (app: Router) => {
       logger.debug('Calling Create-Sprint endpoint with body: %o', req.body );
       try {
         const sprintServiceInstance = Container.get(SprintService);
-        const {success, message, data}  = await sprintServiceInstance.createSprint(req.body as ISprintInputDTO, req.currentUser);
+        const {success, message, data}  = await sprintServiceInstance.createSprint(req.body as ISprintInputDTO);
         return res.status(200).json({ success, message, data });
       } catch (e) {
         logger.error('🔥 error: %o', e);
