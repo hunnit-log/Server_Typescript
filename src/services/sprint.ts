@@ -18,7 +18,7 @@ export default class SprintService {
   ) {
   }
 
-  public async createSprint(sprintInputDTO: ISprintInputDTO, user : IUser): Promise<{ success: boolean; message: string; data: object;}> {
+  public async createSprint(sprintInputDTO: ISprintInputDTO): Promise<{ success: boolean; message: string; data: object;}> {
     try {
       const {
         startTime,
